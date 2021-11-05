@@ -1,0 +1,9 @@
+
+.dataContainer{
+    text-align: center !important;
+    margin: 20px 18% 0 18% !important;
+}
+
+.col-sm-6{
+    border: black solid 2px;
+}

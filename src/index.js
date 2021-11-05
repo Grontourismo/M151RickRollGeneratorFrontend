@@ -1,12 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import {App} from "./App";
+import {ShowPrankData} from "./showPrankData";
+import {Test} from "./test";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Router>
+          <switch>
+              <Route exact path="/"><App /></Route>
+              <Route path="/:title/:prankUID"></Route>
+              <Route path="/data/:prankUID"><ShowPrankData /></Route>
+          </switch>
+      </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
