@@ -11,13 +11,14 @@ import {
 import {App} from "./App";
 import {ShowPrankData} from "./showPrankData";
 import {Test} from "./test";
+import {ShowPrank} from "./showPrank";
 
 ReactDOM.render(
   <React.StrictMode>
       <Router>
           <switch>
               <Route exact path="/"><App /></Route>
-              <Route path="/:title/:prankUID"></Route>
+              <Route path="/:title/:prankUID"><ShowPrank/></Route>
               <Route path="/data/:prankUID"><ShowPrankData /></Route>
           </switch>
       </Router>

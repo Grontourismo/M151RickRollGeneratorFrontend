@@ -10,7 +10,7 @@ export const App = () => {
         const description = document.getElementById("description").value
         const imageURL = document.getElementById("imageURL").value
 
-        if (title !== "" && title !== null) {
+        if (title !== "" && title !== null && title.size <= 45 && description.size <= 155) {
             fetch(config.apiEndpoint + "/prank",
                 {
                     headers: {
