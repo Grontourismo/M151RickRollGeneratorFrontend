@@ -10,7 +10,10 @@ export const App = () => {
         const description = document.getElementById("description").value
         const imageURL = document.getElementById("imageURL").value
 
-        if (title !== "" && title !== null && title.size <= 45 && description.size <= 155) {
+        if (title !== "" && title !== null && title.length <= 45 && description.length <= 155) {
+            const body = JSON.stringify({"title": title, "description": description, "imageURL": imageURL})
+
+
             fetch(config.apiEndpoint + "/prank",
                 {
                     headers: {
@@ -18,21 +21,13 @@ export const App = () => {
                         'Content-Type': 'application/json'
                     },
                     method: "POST",
-                    body: "{" +
-                        "title:" + title + "," +
-                        "description:" + description + "," +
-                        "imageURL:" + imageURL +
-                        "}"
+                    body: body
+                }).then(function (response) {
+                return response.json();
                 })
-                .then(function (res) {
-                    switch (res.status) {
-                        case 200 || 201:
-                            window.location.href = "/data/" + res[0].uid;
-                            break;
-                        default:
-                            document.getElementById("errorMsg").innerText = "Could not create";
-                            break;
-                    }
+                .then(function (myJson) {
+                    console.log(JSON.stringify(myJson));
+                    window.location.href = "/data/" + myJson.uid;
                 })
                 .catch((error) => {
                     document.getElementById("errorMsg").innerText = "Could not create";
@@ -45,7 +40,7 @@ export const App = () => {
     return (
         <div>
             <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                <img className="rickRolIMG" src={rickRollImage}/>
+                <img className="rickRolIMG" src={rickRollImage} alt="rickRollIMG"/>
             </a>
             <div className="text-center">
                 <h2 className="title">

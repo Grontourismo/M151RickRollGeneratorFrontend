@@ -1,5 +1,5 @@
 
 
 export default {
-    apiEndpoint: "localhost:8001"
+    apiEndpoint: "http://localhost:8080"
 }

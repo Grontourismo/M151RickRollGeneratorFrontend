@@ -3,7 +3,6 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import {useEffect, useState} from "react";
 import config from "./lib/config";
 import {useParams} from "react-router-dom";
-import {map} from "react-bootstrap/ElementChildren";
 import {Chart} from "react-google-charts";
 
 export const ShowPrankData = () => {
@@ -12,33 +11,45 @@ export const ShowPrankData = () => {
     const prankUID = useParams();
 
     useEffect(() => {
-        fetch(config.apiEndpoint + "/prank/" + prankUID,
+        fetch(config.apiEndpoint + "/prank/" + prankUID.prankUID,
             {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                method: "GET",
+                method: "GET"
             })
             .then(res => res.json())
-            .then(json => setPrank(json));
+            .then(json => setPrank(json))
+            .catch((error) => {
+                console.log(error)
+            });
+    }, [])
 
-        fetch(config.apiEndpoint + "/stat/" + prankUID,
-            {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: "GET",
-            })
-            .then(res => res.json())
-            .then(json => setPrankStat(json));
-    })
+    useEffect(() => {
+        console.log(prank)
+
+        if (prank.id !== undefined) {
+            fetch(config.apiEndpoint + "/stat/" + prank.id,
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "GET",
+                })
+                .then(res => res.json())
+                .then(json => setPrankStat(json)).catch((error) => {
+                console.log(error)
+            });
+            console.log(prankStat)
+        }
+    }, [prank])
 
     function getChartData(item) {
         let array = [['Task', 'Rick Rolled people from countries']];
         item.map(stat => {
-            array.push([stat.country, stat.count]);
+            array.push([stat.country + " | " + stat.count, stat.count]);
         });
         return array;
     }
@@ -48,7 +59,7 @@ export const ShowPrankData = () => {
             <h2>
                 Here's the link:
             </h2>
-            <p>{window.location.origin + item.title + "/" + item.uid}</p>
+            <p>{window.location.origin + "/show/" + prank.title + "/" + prank.uid}</p>
             <br/>
             <br/>
             <h2>Statistics</h2>
@@ -70,7 +81,7 @@ export const ShowPrankData = () => {
                 </div>
                 <div className="col-sm-6">
                     <h3>You have rick rolled this many people</h3>
-                    <h4>{item.count}</h4>
+                    <h4>{prank.count}</h4>
                 </div>
             </div>
         </div>

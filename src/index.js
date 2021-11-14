@@ -4,26 +4,21 @@ import reportWebVitals from './reportWebVitals';
 
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import {App} from "./App";
 import {ShowPrankData} from "./showPrankData";
-import {Test} from "./test";
 import {ShowPrank} from "./showPrank";
 
 ReactDOM.render(
-  <React.StrictMode>
-      <Router>
-          <switch>
-              <Route exact path="/"><App /></Route>
-              <Route path="/:title/:prankUID"><ShowPrank/></Route>
-              <Route path="/data/:prankUID"><ShowPrankData /></Route>
-          </switch>
-      </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <Router>
+            <Route exact path="/"><App/></Route>
+            <Route exact path="/show/:title/:prankUID"><ShowPrank/></Route>
+            <Route exact path="/data/:prankUID"><ShowPrankData/></Route>
+        </Router>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
